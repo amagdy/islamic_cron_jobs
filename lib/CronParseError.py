@@ -1,0 +1,2 @@
+class CronParseError(Exception):
+    pass

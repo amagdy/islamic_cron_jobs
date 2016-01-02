@@ -1,0 +1,45 @@
+# Islamic crontab
+
+# gm:	Gregorian Month (1 to 12)
+# gd:	Gregorian Day of Month (1 to 31)
+# hm:	Hijri Month (1 to 12)
+# hd:	Hijri day of month (1 to 30)
+# dow: 	day of week (0 - 6 or 1 - 7) (Sunday = 0 or 7)
+# pr: 	Prayer (0 = Fajr, 1 = Shrooq, 2 = Dhuhr, 3 = Asr, 4 = Maghrib, 5 = Isha)
+# m: 	Minutes offset from prayer (from -1000 to 1000)
+# cmd:	Command (any shell command or shell script)
+
+# Format (tab or space separated values)
+# gm   gd   hm   hd   dow   pr          m   cmd
+
+# Play Athan
+# *    *    *    *    *     0,2,3,4,5   0    totem /opt/islam/athan.mp3
+
+# Iqama for Fajr, Dhuhr, Asr and Isha is after 20 minutes
+# *    *    *    *    *     0,2,3,5     20   totem /opt/islam/iqama.mp3
+
+# Iqama for Maghrib is after 15 minutes
+# *    *    *    *    *     4   	    15   totem /opt/islam/iqama.mp3
+
+# Monday and Thursday Fasting (remind me Sunday and Wednesday before Isha by 
+# 10 minutes)
+# *    *    1,2,3,4,5,6,7,8,10,11,12    *    0,3   5   	   -10   /opt/reminder_for_fasting.sh
+
+# Prepare Early for Jom'a prayer (before Athan by 2 hours)
+# *    *    *    *    5     2   	   -120   /opt/reminder_for_fasting.sh
+
+# Set status as busy/away on Skype during Jom'a prayer (before Athan by 2 hours)
+# *    *    *    *    5     2   	   -30   /opt/set_busy_for.sh 90
+
+# Fast the 3 white days (reminder 12,13,14 of the hijri month before Isha by 8 
+# minutes all months except Ramadan and ThulHija)
+# *    *    1,2,3,4,5,6,7,8,10,11    12,13,14    *     5   	   -8   /opt/reminder_for_fasting.sh
+
+# Qyam at night before Fajr by 2 Hours
+# *    *    *    *    *     0   	   -120   /opt/alarm_wakeup.sh
+
+# Zakah every Hijri year After Maghrib by 40 Minutes
+# *    *    9    25   *     4           40    /opt/remember_zakah.sh
+
+# You can also import other cron tab files like this
+# @import(/opt/ramadan_cron.tab)

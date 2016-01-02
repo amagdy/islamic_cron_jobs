@@ -1,0 +1,4 @@
+# Zakah every Hijri year after Maghrib by 40 Minutes 
+*    *    9    25   *     4          40   ./cmd/cmd "Zakah every Hijri year" $gm $gd $hm $hd $dow $pr $min
+*    *    9    *    5     2          30   ./cmd/cmd "Read Soorat AlKahf" $gm $gd $hm $hd $dow $pr $min
+*    *    9    27   *     5          30   ./cmd/cmd "Finish Qoraan" $gm $gd $hm $hd $dow $pr $min

@@ -1,0 +1,39 @@
+#!/usr/bin/python
+import os
+import sys
+
+app, text, gm, gd, hm, hd, dow, pr, min_offset = sys.argv
+gm = int(gm)
+gd = int(gd)
+hm = int(hm)
+hd = int(hd)
+dow = int(dow)
+pr = int(pr)
+min_offset = int(min_offset)
+
+Hijri_Months = ["Muharram", "Safar", "Rabie-Awal", "Rabie-Thani", "Jumada-Awal", "Jumada-Thani", "Rajab", "Shaaban", "Ramadan", "Shawwal", "Dhu-alQiedah", "Dhu-alHijjah"]
+Gregorian_Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+PRAYERS = ['Fajr', 'Shrooq', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
+DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+LOG_FILE_PATH = "/home/magdy/Desktop/islamic_cron_jobs/cmd/logs.txt"
+
+output = "{0} {1} , {2} {3} ".format(gd, Gregorian_Months[gm-1], hd, Hijri_Months[hm-1])
+day_of_week = DAYS[dow]
+current_prayer = PRAYERS[pr]
+if day_of_week == "Friday" and current_prayer == "Dhuhr":
+    current_prayer = "Jumaa"
+
+before_or_after = "after"
+if min_offset == 0:
+    before_or_after = "at {0} prayer".format(current_prayer)
+elif min_offset < 0:
+    min_offset = abs(min_offset)
+    before_or_after = "before {0} prayer by {1} minutes".format(current_prayer, min_offset)
+else:
+    before_or_after = "after {0} prayer by {1} minutes".format(current_prayer, min_offset)
+
+output = "{0} on {1} {2} : {3}\n".format(output, day_of_week, before_or_after, text)
+
+with open(LOG_FILE_PATH, "a") as log_file:
+    log_file.write(output)
+    log_file.close()

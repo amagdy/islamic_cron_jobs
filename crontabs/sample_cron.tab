@@ -1,0 +1,41 @@
+# Islamic crontab
+
+# gm:	Gregorian Month (1 to 12)
+# gd:	Gregorian Day of Month (1 to 31)
+# hm:	Hijri Month (1 to 12)
+# hd:	Hijri day of month (1 to 30)
+# dow: 	day of week (0 - 6 or 1 - 7) (Sunday = 0 or 7)
+# pr: 	Prayer (0 = Fajr, 1 = Shrooq, 2 = Dhuhr, 3 = Asr, 4 = Maghrib, 5 = Isha)
+# min: 	Minutes offset from prayer (from -1000 to 1000)
+# cmd:	Command (any shell command or shell script)
+
+# Format (tab or space separated values)
+# gm    gd    hm    hd    dow    pr    min    cmd
+
+# Play Athan
+*    *    *    *    *     0,2,3,4,5   0    ./cmd/cmd "Play Athan" $gm $gd $hm $hd $dow $pr $min
+
+# Iqama for Fajr, Dhuhr, Asr and Isha is after 20 minutes
+*    *    *    *    *     0,2,3,5     20   ./cmd/cmd "Iqama for Fajr, Dhuhr, Asr and Isha is after 20 minutes" $gm $gd $hm $hd $dow $pr $min
+
+# Iqama for Maghrib is after 15 minutes
+*    *    *    *    *     4   	    15   ./cmd/cmd "Iqama for Maghrib is after 15 minutes" $gm $gd $hm $hd $dow $pr $min
+
+# Monday and Thursday Fasting (remind me Sunday and Wednesday before Isha by 
+# 10 minutes)
+*    *    *    *    0,3   5   	   -10   ./cmd/cmd "Monday and Thursday Fasting" $gm $gd $hm $hd $dow $pr $min
+
+# Prepare Early for Jom'a prayer (before Athan by 2 hours)
+*    *    *    *    5     2   	   -120   ./cmd/cmd "Prepare Early for Jom'a prayer" $gm $gd $hm $hd $dow $pr $min
+
+# Set status as busy/away on Skype during Jom'a prayer (before Athan by 2 hours)
+*    *    *    *    5     2   	   -30   ./cmd/cmd "Set status as busy/away on Skype during Jom'a prayer" $gm $gd $hm $hd $dow $pr $min
+
+# Fast the 3 white days (reminder 12,13,14 of the hijri month before Isha by 8 
+# minutes all months except Ramadan and ThulHija)
+*    *    1,2,3,4,5,6,7,8,10,11    12,13,14    *     5   	   -8   ./cmd/cmd "Fast the 3 white days" $gm $gd $hm $hd $dow $pr $min
+
+# Qyam at night before Fajr by 2 Hours
+*    *    *    *    *     0   	   -120   ./cmd/cmd "Qyam at night before Fajr by 2 Hours" $gm $gd $hm $hd $dow $pr $min
+
+@import(./crontabs/ramadan_cron.tab)
